@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head">
+    <meta charset="UTF-8">
+    <title>归档</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css">
+</head>
+<body>
+<!--首页-->
+<nav class="ui inverted attached segment m-padded-tb-mini" th:replace="_fragments :: menu">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <a href="index.html" class="item"><h1 class="ui teal header item">Blog</h1></a>
+            <a href="index.html" class="item m-item m-mobile-hide"><i class="home icon"></i>首页</a>
+            <a href="types.html" class="item m-item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="archives.html" class="item m-item m-mobile-hide"><i class="clone icon"></i>归档</a>
+            <a href="about.html" class="item m-item m-mobile-hide"><i class="info icon"></i>关于我</a>
+            <div class="right item">
+                <div class="ui icon input">
+                    <input type="text" placeholder="Search">
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!--中间-->
+<div class="m-padded-tb-large">
+    <div class="ui container">
+        <div class="ui container">
+            <div class="ui top segment">
+                <div class="ui middle aligned two column grid">
+                    <div class="column">
+                        <h3 class="ui teal header">归档</h3>
+                    </div>
+                    <div class="right aligned column">
+                        共<h3 class="ui orange header m-inline-block" th:text="${blogCount}">14</h3>篇
+                    </div>
+                </div>
+            </div>
+        </div>
+        <th:block th:each="item : ${archiveMap}">
+        <h2 class="ui center aligned orange header" th:text="${item.key}">2019</h2>
+        <div class="ui fluid vertical menu">
+            <a href="#" class="item" target="_blank" th:each="blog : ${item.value}" th:href="@{/blog/{id}(id=${blog.id})}">
+                <span>
+                    <i class="mini teal circle icon"></i><span th:text="${blog.title}"></span>
+                </span>
+                <div class="ui teal label" th:text="${#dates.format(blog.updateTime,'MM-dd')}">11-9</div>
+            </a>
+        </div>
+        </th:block>
+    </div>
+    <br>
+    <br>
+    <br>
+</div>
+
+<!--底部-->
+</body>
+<th:block th:replace="_fragments :: script">
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+</th:block>
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+</script>
+</html>

@@ -1,0 +1,16 @@
+GET http://localhost:8080/admin
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-11-29T042529.200.html
+
+###
+
+GET http://localhost:8080
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-11-29T042457.200.html
+
+###
+

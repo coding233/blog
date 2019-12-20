@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>博客</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+    <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+</head>
+<body>
+    <nav th:fragment="menu" class="ui inverted attached segment m-padded-tb-mini">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <a href="#" th:href="@{/}" class="item"><h1 class="ui teal header item">Blog</h1></a>
+            <a href="#" th:href="@{/}" class="item m-item m-mobile-hide"><i class="home icon"></i>首页</a>
+            <a href="./types.html" th:href="@{/types/-1}" class="item m-item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="#" th:href="@{/archives}" class="item m-item m-mobile-hide"><i class="clone icon"></i>归档</a>
+            <a href="#" th:href="@{/about}" class="item m-item m-mobile-hide"><i class="info icon"></i>关于我</a>
+            <div class="right item">
+                <form action="#" th:action="@{/search}" target="_blank" name="search" method="post">
+                    <div class="ui icon input">
+                        <input type="text" placeholder="Search" name="query" th:value="${query}">
+                        <i class="search link icon" onclick="document.forms['search'].submit()"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+</body>
+<th:block th:fragment="script">
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+    <script src="../static/lib/prism/prism.js" th:src="@{/lib/prism/prism.js}"></script>
+    <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
+    <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+    <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
+    <script src="../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
+</th:block>
+</html>

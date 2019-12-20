@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head">
+    <meta charset="UTF-8">
+    <title>写文章</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
+</head>
+<body>
+<!--首页-->
+<nav class="ui inverted attached segment m-padded-tb-mini" th:replace="admin/_fragments :: menu">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <a href="../index.html" class="item"><h1 class="ui teal header item">控制台</h1></a>
+            <a href="../index.html" class="item m-item m-mobile-hide"><i class="home icon"></i>首页</a>
+            <a href="../types.html" class="item m-item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <div class="right menu">
+                <div class="ui inverted compact menu">
+                    <div class="ui simple dropdown item">
+                        <img class="ui avatar image" src="https://unsplash.it/800/450?image=1005">
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" class="item">注销</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" class="teal active item" th:href="@{/admin/blogs/input}">发布</a>
+            <a href="#" class="teal item" th:href="@{/admin/blogs}">列表</a>
+        </div>
+    </div>
+</div>
+
+<!--中间-->
+<div class="m-padded-tb-large">
+    <div class="ui container">
+        <form action="#" method="post" class="ui segment form" th:action="@{/admin/blogs}" id="blog-form" th:object="${blog}">
+            <input type="hidden" name="id" th:value="*{id}">
+            <div class="required field">
+                <input type="text" name="title" placeholder="标题" th:value="*{title}">
+            </div>
+            <div class="required field">
+                <div id="md-content" style="z-index: 1 !important;">
+                    <textarea placeholder="内容" name="content" style="display: none" th:text="*{content}"></textarea>
+                </div>
+            </div>
+            <div class="equal width fields">
+                <div class="required field">
+                    <div class="ui left labeled action input">
+                        <label class="ui compact teal basic label">分类</label>
+                        <div class="ui fluid selection dropdown">
+                            <input type="hidden" name="type.id" th:value="*{type}!=null ? *{type.id}">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">分类</div>
+                            <div class="menu">
+                                <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">错误日志</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui right aligned container">
+                <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+                <button type="button" class="ui teal submit button" id="published-btn">发布</button>
+            </div>
+        </form>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+
+<!--底部-->
+</body>
+<th:block th:replace="admin/_fragments :: script">
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="../../static/lib/editormd/editormd.min.js"></script>
+</th:block>
+<script>
+    //初始化Markdown编辑器
+    var contentEditor;
+    $(function() {
+        contentEditor = editormd("md-content", {
+            width   : "100%",
+            height  : 640,
+            syncScrolling : "single",
+       // path    : "../static/lib/editormd/lib/"
+            path    : "/lib/editormd/lib/"
+        });
+    });
+
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('#publish-btn').click(function () {
+        $('#blog-form').submit();
+    });
+
+    $('.ui.dropdown').dropdown({
+        on : 'hover'
+    });
+
+    $('.ui.form').form({
+        fields : {
+            title : {
+                identifier: 'title',
+                rules: [{
+                    type : 'empty',
+                    prompt: '标题：请输入博客标题'
+                }]
+            },
+            content : {
+                identifier: 'content',
+                rules: [{
+                    type : 'empty',
+                    prompt: '标题：请输入博客内容'
+                }]
+            },
+            typeId : {
+                identifier: 'type.id',
+                rules: [{
+                    type : 'empty',
+                    prompt: '标题：请输入博客分类'
+                }]
+            }
+        }
+    });
+
+</script>
+</html>

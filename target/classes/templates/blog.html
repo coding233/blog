@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head">
+    <meta charset="UTF-8">
+    <title>博客详情</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css">
+    <link rel="stylesheet" href="../static/css/typo.css">
+    <link rel="stylesheet" href="../static/css/animate.css">
+    <link rel="stylesheet" href="../static/lib/prism/prism.css">
+</head>
+<body>
+<!--首页-->
+<nav class="ui inverted attached segment m-padded-tb-mini" th:replace="_fragments :: menu">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <a href="index.html" class="item"><h1 class="ui teal header item">Blog</h1></a>
+            <a href="index.html" class="item m-item m-mobile-hide"><i class="home icon"></i>首页</a>
+            <a href="types.html" class="item m-item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="archives.html" class="item m-item m-mobile-hide"><i class="clone icon"></i>归档</a>
+            <a href="about.html" class="item m-item m-mobile-hide"><i class="info icon"></i>关于我</a>
+            <div class="right item">
+                <div class="ui icon input">
+                    <input type="text" placeholder="Search">
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!--中间-->
+<div class="m-padded-tb-large animated fadeIn" >
+    <div class="ui container">
+        <div class="ui top attached segment">
+            <div class="ui grid">
+                <div class="center aligned column">
+                    <h3 th:text="${blog.title}">标题</h3>
+                </div>
+            </div>
+        </div>
+        <div class="ui attached segment">
+            <div class="ui container">
+                <a class="ui teal ribbon label"></a>
+                <div id="content" class="typo typo-selection" th:utext="${blog.content}">
+                    内容
+                </div>
+            </div>
+        </div>
+        <div class="ui attached message">
+            <div class="ui middle aligned grid">
+                <div class="eleven wide column">
+                    <ui class="list">
+                        <li><a href="#" class="header" th:text="${blog.user.nickname}">admin</a></li>
+                        <li><i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}"></span></li>
+                    </ui>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-right-bottom" id="toolbar">
+        <div class="ui vertical icon buttons">
+            <div class="ui icon button" id="toTop-button">
+                <i class="chevron up icon"></i>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+</div>
+
+<!--底部-->
+</body>
+<th:block th:replace="_fragments :: script">
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="../static/lib/prism/prism.js"></script>
+<script src="../static/lib/qrcode/qrcode.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+<script src="../static/lib/waypoints/jquery.waypoints.min.js"></script>
+<script src="../static/lib/tocbot/tocbot.min.js"></script>
+</th:block>
+
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('#toTop-button').click(function () {
+        $(window).scrollTo(0);
+    });
+
+    $('.ui.form').form({
+        fields: {
+            title: {
+                identifier: 'content',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入评论内容'
+                }]
+            }
+        }
+    });
+
+    $('#commentPost-btn').click(function () {
+        var boo = $('.ui.form').form('validate form');
+        if (boo){
+            console.log("校验成功");
+            postData()
+        }else {
+            console.log("校验失败");
+        }
+    });
+
+    function postData() {
+        $("#comment-container").load(/*[[@{/comments}]]*/"",{
+            "parentComment.id" : $("[name='parentComment.id']").val(),
+            "blog.id" : $("[name='blog.id']").val(),
+            "content" : $("[name='content']").val()
+        },function (responseTxt, statusTxt, xhr) {
+//        $(window).scrollTo($('#comment-container'),500);
+            clearContent();
+        });
+    }
+
+    function clearContent() {
+        $("[name='content']").val('');
+        $("[name='parentComment.id']").val(-1);
+        $("[name='content']").attr("placeholder", "请输入评论信息...");
+    }
+
+    function reply(obj) {
+        var commentId = $(obj).data('commentid');
+        $("[name='parentComment.id']").val(commentId);
+        $(window).scrollTo($('#comment-form'),500);
+    }
+
+    // var waypoint = new Waypoint({
+    //     element: document.getElementById('waypoint'),
+    //     handler: function(direction) {
+    //         if (direction == 'down') {
+    //             $('#toolbar').show(100);
+    //         } else {
+    //             $('#toolbar').hide(500);
+    //         }
+    //         console.log('Scrolled to waypoint!  ' + direction);
+    //     }
+    // })
+
+</script>
+</html>

@@ -1,0 +1,60 @@
+.m-padded-tb-mini{
+    padding-top: 0.2em !important;
+    padding-bottom: 0.2em !important;
+}
+
+.m-padded-tb-massive{
+    padding-top: 5em !important;
+    padding-bottom: 5em !important;
+}
+
+.m-padded-tb-large {
+    padding-top: 2em !important;
+    padding-bottom: 2em !important;
+}
+
+.m-inline-block{
+    display: inline-block !important;
+}
+
+.m-margin-tb-tiny{
+    margin-top: 0.3em !important;
+    margin-bottom: 0.3em !important;
+}
+
+.m-right-top{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.m-mobile-show{
+    display: none !important;
+}
+
+@media screen and (max-width:768px){
+    .m-mobile-hide{
+        display: none !important;
+    }
+    .m-mobile-show{
+        display: block !important;
+    }
+}
+
+.m-right-bottom{
+    position: absolute;
+    right: 0;
+}
+
+.m-container-small{
+    max-width: 30em !important;
+    margin: auto !important;
+}
+
+.m-black {
+    color: #333 !important;
+}
+
+body {
+    background: url("../img/bg.png");
+}

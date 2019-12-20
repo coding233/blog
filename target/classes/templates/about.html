@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head">
+    <meta charset="UTF-8">
+    <title>关于我</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css">
+</head>
+<body>
+<!--首页-->
+<nav class="ui inverted attached segment m-padded-tb-mini" th:replace="_fragments :: menu">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <a href="index.html" class="item"><h1 class="ui teal header item">Blog</h1></a>
+            <a href="index.html" class="item m-item m-mobile-hide"><i class="home icon"></i>首页</a>
+            <a href="types.html" class="item m-item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="archives.html" class="item m-item m-mobile-hide"><i class="clone icon"></i>归档</a>
+            <a href="about.html" class="item m-item m-mobile-hide"><i class="info icon"></i>关于我</a>
+            <div class="right item">
+                <div class="ui icon input">
+                    <input type="text" placeholder="Search">
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show" >
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!--中间-->
+<div class="m-padded-tb-large">
+    <div class="ui container">
+        <div class="ui stackable grid">
+            <div class="eleven wide column">
+                <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui rounded image">
+            </div>
+            <div class="five wide column">
+                <div class="ui top attached segment">
+                    <div class="ui header">关于我</div>
+                </div>
+                <div class="ui attached segment">
+                    <p>某大学在校生</p>
+                </div>
+                <div class="ui attached segment">
+                    <a href="https://github.com/coding233"><i class="github icon"></i>github</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--底部-->
+</body>
+<th:block th:replace="_fragments :: script">
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+</th:block>
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+</script>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head">
+    <meta charset="UTF-8">
+    <title>博客管理</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+</head>
+<body>
+<!--首页-->
+<nav class="ui inverted attached segment m-padded-tb-mini" th:replace="admin/_fragments :: menu">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <a href="../index.html" class="item"><h1 class="ui teal header item">控制台</h1></a>
+            <a href="../index.html" class="item m-item m-mobile-hide"><i class="home icon"></i>首页</a>
+            <a href="../types.html" class="item m-item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <div class="right menu">
+                <div class="ui inverted compact menu">
+                    <div class="ui simple dropdown item">
+                        <img class="ui avatar image" src="https://unsplash.it/800/450?image=1005">
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" class="item">注销</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" class="teal item" th:href="@{/admin/blogs/input}">发布</a>
+            <a href="#" class="teal active item" th:href="@{/admin/blogs}">列表</a>
+        </div>
+    </div>
+</div>
+
+<!--中间-->
+<div class="m-padded-tb-large">
+    <div class="ui container">
+        <div class="ui secondary segment form">
+            <input type="hidden" name="page" >
+            <div class="inline fields">
+                <div class="field">
+                    <input type="text" name="title" placeholder="标题">
+                </div>
+                <div class="field">
+                    <button type="button" id="search-btn" class="ui mini teal basic button"><i class="search icon"></i>搜索</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="table-container">
+            <table class="ui table" th:fragment="blogList">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>标题</th>
+                    <th>类型</th>
+                    <th>更新时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="blog,iterStat : ${page.content}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${blog.title}">aa</td>
+                    <td th:text="${blog.type.name}">刻意练习清单</td>
+                    <td th:text="${blog.updateTime}">2017-12-12</td>
+                    <td>
+                        <a href="#" class="ui mini teal button" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}">编辑</a>
+                        <a href="#" class="ui mini red button" th:href="@{/admin/blogs/{id}/delete(id=${blog.id})}">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="6">
+                        <div class="ui pagination menu" th:if="${page.totalPages}>1">
+                            <a onclick="page(this)" class="item" th:attr="data-page=${page.number}-1" th:unless="${page.first}">上一页</a>
+                            <a onclick="page(this)" class="item" th:attr="data-page=${page.number}+1" th:unless="${page.last}">下一页</a>
+                        </div>
+                        <a th:href="@{/admin/blogs/input}" class="ui mini teal right floated basic button">新增</a>
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+
+<!--底部-->
+</body>
+<th:block th:replace="admin/_fragments :: script">
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+</th:block>
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    function page(obj) {
+        $("[name='page']").val($(obj).data("page"));
+        loaddata();
+    }
+
+    function loaddata() {
+        $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search",{
+            title : $("[name='title']").val(),
+            typeId : $("[name='typeId']").val(),
+            page : $("[name='page']").val()
+        });
+    }
+
+    $("#search-btn").click(function () {
+        $("[name='page']").val(0);
+        loaddata();
+    });
+</script>
+</html>

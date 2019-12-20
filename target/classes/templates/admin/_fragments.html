@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>博客</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css" th:href="@{/lib/editormd/css/editormd.min.css}">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+</head>
+<body>
+<nav class="ui inverted attached segment m-padded-tb-mini" th:fragment="menu">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <a href="../index.html" class="item"><h1 class="ui teal header item">控制台</h1></a>
+            <a href="../index.html" class="item m-item m-mobile-hide" th:href="@{/admin/blogs}"><i class="home icon"></i>首页</a>
+            <a href="../types.html" class="item m-item m-mobile-hide" th:href="@{/admin/types}"><i class="idea icon"></i>分类</a>
+            <div class="right menu">
+                <div class="ui inverted compact menu">
+                    <div class="ui simple dropdown item">
+                        <img class="ui avatar image" src="https://unsplash.it/800/450?image=1005">
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" class="item" th:href="@{/admin/logout}">注销</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+</body>
+<th:block th:fragment="script">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+    <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
+</th:block>
+</html>
